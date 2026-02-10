@@ -1,12 +1,14 @@
-import { MapPin, Search, ChevronRight } from "lucide-react";
+import { MapPin, Search, ChevronRight, Clock } from "lucide-react";
 import { Link } from "react-router-dom";
-import { categories, shops } from "@/data/mock-data";
+import { categories, shops, products } from "@/data/mock-data";
 import CategoryGrid from "@/components/CategoryGrid";
 import ShopCard from "@/components/ShopCard";
+import ProductCard from "@/components/ProductCard";
 import { motion } from "framer-motion";
 
 const Index = () => {
   const openShops = shops.filter((s) => s.isOpen);
+  const rentalTools = products.filter((p) => p.isRental && p.inStock).slice(0, 4);
 
   return (
     <div className="min-h-screen bg-background pb-20">
@@ -72,11 +74,33 @@ const Index = () => {
           <CategoryGrid categories={categories} />
         </motion.section>
 
+        {/* Rent Tools */}
+        {rentalTools.length > 0 && (
+          <motion.section
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.25 }}
+            className="mt-6"
+          >
+            <div className="mb-3 flex items-center justify-between">
+              <h2 className="text-base font-bold text-foreground flex items-center gap-1.5">
+                <Clock className="h-4 w-4 text-accent" /> Rent Power Tools
+              </h2>
+              <Link to="/rentals" className="text-xs font-medium text-primary">View All →</Link>
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              {rentalTools.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+          </motion.section>
+        )}
+
         {/* Nearby Shops */}
         <motion.section
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, delay: 0.3 }}
+          transition={{ duration: 0.3, delay: 0.35 }}
           className="mt-6"
         >
           <div className="mb-3 flex items-center justify-between">

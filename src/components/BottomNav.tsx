@@ -1,12 +1,12 @@
-import { Home, Search, ShoppingCart, User } from "lucide-react";
+import { Home, Search, ShoppingCart, User, Clock } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useCart } from "@/contexts/CartContext";
 
 const navItems = [
   { icon: Home, label: "Home", path: "/" },
   { icon: Search, label: "Shops", path: "/shops" },
+  { icon: Clock, label: "Rentals", path: "/rentals" },
   { icon: ShoppingCart, label: "Cart", path: "/cart" },
-  { icon: User, label: "Account", path: "/account" },
 ];
 
 const BottomNav = () => {
