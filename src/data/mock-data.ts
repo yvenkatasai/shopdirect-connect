@@ -33,6 +33,9 @@ export interface Product {
   inStock: boolean;
   category: string;
   specs?: string[];
+  isRental?: boolean;
+  rentalPrice?: { daily: number; weekly: number };
+  deposit?: number;
 }
 
 export interface CartItem {
@@ -60,6 +63,7 @@ export const categories: Category[] = [
   { id: "paint", name: "Paint & Accessories", icon: PaintBucket, productCount: 36 },
   { id: "garden", name: "Garden Tools", icon: Fence, productCount: 24 },
   { id: "hardware", name: "Hardware & Fasteners", icon: Wrench, productCount: 92 },
+  { id: "rentals", name: "Tools for Rent", icon: Hammer, productCount: 15 },
 ];
 
 export const shops: Shop[] = [
@@ -155,6 +159,14 @@ export const products: Product[] = [
   // Sai Plumbing
   { id: "p11", shopId: "5", name: "CPVC Pipe 1/2 inch", image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=400&h=400&fit=crop", price: 85, unit: "per 3ft", description: "Astral CPVC pipe for hot and cold water supply. Lead-free, corrosion resistant.", inStock: true, category: "plumbing" },
   { id: "p12", shopId: "5", name: "Basin Mixer Tap", image: "https://images.unsplash.com/photo-1585704032915-c3400ca199e7?w=400&h=400&fit=crop", price: 1450, unit: "piece", description: "Jaquar chrome finish basin mixer tap. Single lever, quarter turn ceramic disc.", inStock: true, category: "plumbing" },
+
+  // Rental Tools
+  { id: "r1", shopId: "2", name: "Bosch Angle Grinder", image: "https://images.unsplash.com/photo-1504148455328-c376907d081c?w=400&h=400&fit=crop", price: 0, unit: "rental", description: "Bosch GWS 600 Professional angle grinder. 670W motor, 100mm disc. Perfect for cutting and grinding metal, tiles, and stone.", inStock: true, category: "rentals", isRental: true, rentalPrice: { daily: 150, weekly: 800 }, deposit: 500, specs: ["Brand: Bosch", "Power: 670W", "Disc: 100mm", "Speed: 12000 RPM"] },
+  { id: "r2", shopId: "2", name: "Hilti Rotary Hammer Drill", image: "https://images.unsplash.com/photo-1504148455328-c376907d081c?w=400&h=400&fit=crop", price: 0, unit: "rental", description: "Hilti TE 2-S rotary hammer drill. Ideal for drilling in concrete, masonry, and natural stone.", inStock: true, category: "rentals", isRental: true, rentalPrice: { daily: 350, weekly: 2000 }, deposit: 2000, specs: ["Brand: Hilti", "Power: 650W", "Max Drill: 22mm", "Impact Energy: 1.8J"] },
+  { id: "r3", shopId: "1", name: "Tile Cutter Machine", image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&h=400&fit=crop", price: 0, unit: "rental", description: "Electric tile cutting machine with water cooling. Cuts ceramic, porcelain, and vitrified tiles up to 12 inches.", inStock: true, category: "rentals", isRental: true, rentalPrice: { daily: 200, weekly: 1200 }, deposit: 1000, specs: ["Type: Wet Cutter", "Blade: 7 inch", "Max Tile: 12 inch", "Motor: 1100W"] },
+  { id: "r4", shopId: "1", name: "Concrete Vibrator", image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&h=400&fit=crop", price: 0, unit: "rental", description: "Concrete needle vibrator for compaction during RCC work. 35mm needle, 1.5HP motor.", inStock: true, category: "rentals", isRental: true, rentalPrice: { daily: 300, weekly: 1800 }, deposit: 1500, specs: ["Needle: 35mm", "Power: 1.5 HP", "Frequency: 12000 VPM", "Cable: 6m"] },
+  { id: "r5", shopId: "2", name: "Circular Saw (Wood)", image: "https://images.unsplash.com/photo-1504148455328-c376907d081c?w=400&h=400&fit=crop", price: 0, unit: "rental", description: "Bosch GKS 190 circular saw. Clean, fast cuts in wood and plywood. 1400W motor.", inStock: false, category: "rentals", isRental: true, rentalPrice: { daily: 200, weekly: 1100 }, deposit: 800, specs: ["Brand: Bosch", "Power: 1400W", "Blade: 190mm", "Max Depth: 70mm"] },
+  { id: "r6", shopId: "5", name: "Pipe Threading Machine", image: "https://images.unsplash.com/photo-1585704032915-c3400ca199e7?w=400&h=400&fit=crop", price: 0, unit: "rental", description: "Electric pipe threading machine for GI and MS pipes. Threads 1/2 to 2 inch pipes.", inStock: true, category: "rentals", isRental: true, rentalPrice: { daily: 400, weekly: 2200 }, deposit: 2000, specs: ["Range: 1/2–2 inch", "Type: Electric", "Power: 750W", "Weight: 28 kg"] },
 ];
 
 export const vendorOrders: Order[] = [
