@@ -1,20 +1,20 @@
-import { Home, Search, ShoppingCart, User, Clock } from "lucide-react";
+import { Home, Search, ShoppingCart, Clock, Settings } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useCart } from "@/contexts/CartContext";
-
-const navItems = [
-  { icon: Home, label: "Home", path: "/" },
-  { icon: Search, label: "Shops", path: "/shops" },
-  { icon: Clock, label: "Rentals", path: "/rentals" },
-  { icon: ShoppingCart, label: "Cart", path: "/cart" },
-];
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const BottomNav = () => {
   const location = useLocation();
   const { totalItems } = useCart();
+  const { t } = useLanguage();
 
-  // Hide bottom nav on vendor pages
-  if (location.pathname.startsWith("/vendor")) return null;
+  const navItems = [
+    { icon: Home, label: t("nav.home"), path: "/" },
+    { icon: Search, label: t("nav.shops"), path: "/shops" },
+    { icon: Clock, label: t("nav.rentals"), path: "/rentals" },
+    { icon: ShoppingCart, label: t("nav.cart"), path: "/cart" },
+    { icon: Settings, label: t("nav.settings"), path: "/settings" },
+  ];
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 border-t border-border bg-card/95 backdrop-blur-md safe-area-pb">
@@ -30,7 +30,7 @@ const BottomNav = () => {
               }`}
             >
               <Icon className="h-5 w-5" strokeWidth={isActive ? 2.5 : 2} />
-              {label === "Cart" && totalItems > 0 && (
+              {path === "/cart" && totalItems > 0 && (
                 <span className="absolute -top-1 right-0 flex h-4 min-w-[16px] items-center justify-center rounded-full bg-accent text-[10px] font-bold text-accent-foreground px-1">
                   {totalItems}
                 </span>
