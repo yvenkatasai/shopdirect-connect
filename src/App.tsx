@@ -18,6 +18,9 @@ import ProductDetail from "./pages/ProductDetail";
 import Cart from "./pages/Cart";
 import Rentals from "./pages/Rentals";
 import VendorDashboard from "./pages/VendorDashboard";
+import VendorAddProduct from "./pages/VendorAddProduct";
+import VendorInventory from "./pages/VendorInventory";
+import CustomerOrders from "./pages/CustomerOrders";
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
 
@@ -35,12 +38,8 @@ const AppRoutes = () => {
     );
   }
 
-  // Step 1: Language selection
-  if (!isLanguageSelected) {
-    return <LanguageSelection />;
-  }
+  if (!isLanguageSelected) return <LanguageSelection />;
 
-  // Step 2: Not logged in
   if (!user) {
     return (
       <Routes>
@@ -50,7 +49,6 @@ const AppRoutes = () => {
     );
   }
 
-  // Step 3: No role selected
   if (!role) {
     return (
       <Routes>
@@ -60,7 +58,6 @@ const AppRoutes = () => {
     );
   }
 
-  // Step 4: Vendor without shop
   if (role === "vendor" && !hasVendorShop) {
     return (
       <Routes>
@@ -71,20 +68,18 @@ const AppRoutes = () => {
     );
   }
 
-  // Step 5: Vendor dashboard
   if (role === "vendor") {
     return (
-      <>
-        <Routes>
-          <Route path="/vendor" element={<VendorDashboard />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="*" element={<Navigate to="/vendor" replace />} />
-        </Routes>
-      </>
+      <Routes>
+        <Route path="/vendor" element={<VendorDashboard />} />
+        <Route path="/vendor/add-product" element={<VendorAddProduct />} />
+        <Route path="/vendor/inventory" element={<VendorInventory />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="*" element={<Navigate to="/vendor" replace />} />
+      </Routes>
     );
   }
 
-  // Step 6: Customer interface
   return (
     <>
       <Routes>
@@ -94,6 +89,7 @@ const AppRoutes = () => {
         <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/rentals" element={<Rentals />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/orders" element={<CustomerOrders />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

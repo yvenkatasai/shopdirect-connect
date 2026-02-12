@@ -1,9 +1,9 @@
 import React, { createContext, useContext, useState, useCallback } from "react";
-import { Product, Shop, CartItem, shops } from "@/data/mock-data";
+import type { DBProduct, DBVendor, CartItem } from "@/types/database";
 
 interface CartContextType {
   items: CartItem[];
-  addItem: (product: Product) => void;
+  addItem: (product: DBProduct, vendor: DBVendor, isRental?: boolean, rentalDuration?: "daily" | "weekly") => void;
   removeItem: (productId: string) => void;
   updateQuantity: (productId: string, quantity: number) => void;
   clearCart: () => void;
@@ -16,7 +16,7 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [items, setItems] = useState<CartItem[]>([]);
 
-  const addItem = useCallback((product: Product) => {
+  const addItem = useCallback((product: DBProduct, vendor: DBVendor, isRental?: boolean, rentalDuration?: "daily" | "weekly") => {
     setItems((prev) => {
       const existing = prev.find((i) => i.product.id === product.id);
       if (existing) {
@@ -24,8 +24,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
           i.product.id === product.id ? { ...i, quantity: i.quantity + 1 } : i
         );
       }
-      const shop = shops.find((s) => s.id === product.shopId)!;
-      return [...prev, { product, shop, quantity: 1 }];
+      return [...prev, { product, vendor, quantity: 1, isRental, rentalDuration }];
     });
   }, []);
 
@@ -46,7 +45,13 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const clearCart = useCallback(() => setItems([]), []);
 
   const totalItems = items.reduce((sum, i) => sum + i.quantity, 0);
-  const totalPrice = items.reduce((sum, i) => sum + i.product.price * i.quantity, 0);
+  const totalPrice = items.reduce((sum, i) => {
+    if (i.isRental) {
+      const price = i.rentalDuration === "weekly" ? (i.product.rental_price_weekly || 0) : (i.product.rental_price_daily || 0);
+      return sum + price * i.quantity;
+    }
+    return sum + (i.product.price || 0) * i.quantity;
+  }, 0);
 
   return (
     <CartContext.Provider value={{ items, addItem, removeItem, updateQuantity, clearCart, totalItems, totalPrice }}>
