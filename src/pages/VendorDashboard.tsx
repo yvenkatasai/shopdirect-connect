@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { supabase } from "@/integrations/supabase/client";
-import { ArrowLeft, Package, IndianRupee, Clock, Check, X, Truck, Settings, Plus } from "lucide-react";
+import { Package, IndianRupee, Clock, Check, X, Truck, Settings, Plus, List } from "lucide-react";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
 
@@ -105,9 +105,14 @@ const VendorDashboard = () => {
             <h1 className="text-base font-bold text-primary-foreground">{vendor?.shop_name || "My Shop"}</h1>
             <p className="text-[10px] text-primary-foreground/70">{t("vendor.dashboard")}</p>
           </div>
-          <Link to="/settings" className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-foreground/10 text-primary-foreground">
-            <Settings className="h-4 w-4" />
-          </Link>
+          <div className="flex items-center gap-2">
+            <Link to="/vendor/inventory" className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-foreground/10 text-primary-foreground">
+              <List className="h-4 w-4" />
+            </Link>
+            <Link to="/settings" className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-foreground/10 text-primary-foreground">
+              <Settings className="h-4 w-4" />
+            </Link>
+          </div>
         </div>
       </header>
 
@@ -137,7 +142,10 @@ const VendorDashboard = () => {
         {orders.length === 0 ? (
           <div className="mt-8 text-center">
             <Package className="mx-auto h-12 w-12 text-muted-foreground" />
-            <p className="mt-3 text-sm text-muted-foreground">No orders yet. Share your shop to start receiving orders!</p>
+            <p className="mt-3 text-sm text-muted-foreground">No orders yet</p>
+            <Link to="/vendor/add-product" className="mt-3 inline-flex items-center gap-1.5 rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground">
+              <Plus className="h-4 w-4" /> {t("vendor.addProduct")}
+            </Link>
           </div>
         ) : (
           <div className="mt-3 space-y-3">
@@ -206,6 +214,14 @@ const VendorDashboard = () => {
           </div>
         )}
       </div>
+
+      {/* Floating Add Product button */}
+      <Link
+        to="/vendor/add-product"
+        className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-accent text-accent-foreground shadow-lg hover:bg-accent/90 active:scale-95 transition-all"
+      >
+        <Plus className="h-6 w-6" />
+      </Link>
     </div>
   );
 };
