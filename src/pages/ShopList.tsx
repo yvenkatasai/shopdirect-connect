@@ -12,6 +12,7 @@ const ShopList = () => {
   const [deliveryOnly, setDeliveryOnly] = useState(false);
   const [openOnly, setOpenOnly] = useState(false);
   const [vendors, setVendors] = useState<DBVendor[]>([]);
+  const [productVendorIds, setProductVendorIds] = useState<Set<string> | null>(null);
   const [loading, setLoading] = useState(true);
   const { t } = useLanguage();
 
@@ -24,10 +25,30 @@ const ShopList = () => {
     fetch();
   }, []);
 
+  // Search products by name when search query changes
+  useEffect(() => {
+    if (!search.trim()) {
+      setProductVendorIds(null);
+      return;
+    }
+    const timer = setTimeout(async () => {
+      const { data } = await supabase
+        .from("products")
+        .select("vendor_id")
+        .ilike("name", `%${search.trim()}%`);
+      if (data) {
+        setProductVendorIds(new Set(data.map((p) => p.vendor_id)));
+      }
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [search]);
+
   const filtered = vendors.filter((v) => {
     if (search) {
       const q = search.toLowerCase();
-      if (!v.shop_name.toLowerCase().includes(q) && !(v.categories || []).some((c) => c.toLowerCase().includes(q))) return false;
+      const matchesShop = v.shop_name.toLowerCase().includes(q) || (v.categories || []).some((c) => c.toLowerCase().includes(q));
+      const matchesProduct = productVendorIds?.has(v.id);
+      if (!matchesShop && !matchesProduct) return false;
     }
     if (deliveryOnly && !v.delivery_available) return false;
     if (openOnly && !v.is_open) return false;
