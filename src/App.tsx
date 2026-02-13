@@ -90,7 +90,7 @@ const AppRoutes = () => {
         <Route path="/rentals" element={<Rentals />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/orders" element={<CustomerOrders />} />
-        <Route path="/settings" element={<Settings />} />
+        <Route path="/settings" element={<Settings />} /> {/* Keep as fallback */}
         <Route path="*" element={<NotFound />} />
       </Routes>
       <BottomNav />
