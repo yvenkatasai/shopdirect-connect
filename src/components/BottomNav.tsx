@@ -1,4 +1,4 @@
-import { Home, Search, ShoppingCart, Clock, Settings } from "lucide-react";
+import { Home, Search, ShoppingCart, Clock } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useCart } from "@/contexts/CartContext";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -13,7 +13,6 @@ const BottomNav = () => {
     { icon: Search, label: t("nav.shops"), path: "/shops" },
     { icon: Clock, label: t("nav.rentals"), path: "/rentals" },
     { icon: ShoppingCart, label: t("nav.cart"), path: "/cart" },
-    { icon: Settings, label: t("nav.settings"), path: "/settings" },
   ];
 
   return (

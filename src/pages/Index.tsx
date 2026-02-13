@@ -1,4 +1,5 @@
 import { MapPin, Search, ChevronRight, Clock } from "lucide-react";
+import ProfileMenu from "@/components/ProfileMenu";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { supabase } from "@/integrations/supabase/client";
@@ -59,9 +60,7 @@ const Index = () => {
                 <ChevronRight className="h-3.5 w-3.5 text-muted-foreground" />
               </button>
             </div>
-            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-primary-foreground text-sm font-bold">
-              V
-            </div>
+            <ProfileMenu />
           </div>
         </div>
       </header>

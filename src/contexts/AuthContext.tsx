@@ -24,8 +24,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [role, setRole] = useState<AppRole>(null);
   const [loading, setLoading] = useState(true);
   const [hasVendorShop, setHasVendorShop] = useState(false);
+  const [roleLoading, setRoleLoading] = useState(false);
 
   const fetchRole = useCallback(async (userId: string) => {
+    setRoleLoading(true);
     const { data } = await supabase
       .from("user_roles")
       .select("role")
@@ -44,16 +46,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     } else {
       setRole(null);
     }
+    setRoleLoading(false);
   }, []);
 
   useEffect(() => {
-    // Set up auth listener FIRST
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (_event, session) => {
         setSession(session);
         setUser(session?.user ?? null);
         if (session?.user) {
-          // Use setTimeout to avoid Supabase deadlock
           setTimeout(() => fetchRole(session.user.id), 0);
         } else {
           setRole(null);
@@ -63,7 +64,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
     );
 
-    // THEN check existing session
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
       setUser(session?.user ?? null);
@@ -110,9 +110,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return { error: error?.message ?? null };
   };
 
+  // Show loading spinner while role is being fetched after login
+  const isLoading = loading || (!!user && roleLoading);
+
   return (
     <AuthContext.Provider
-      value={{ user, session, role, loading, signUp, signIn, signOut, selectRole, hasVendorShop }}
+      value={{ user, session, role, loading: isLoading, signUp, signIn, signOut, selectRole, hasVendorShop }}
     >
       {children}
     </AuthContext.Provider>

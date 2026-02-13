@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { supabase } from "@/integrations/supabase/client";
-import { Package, IndianRupee, Clock, Check, X, Truck, Settings, Plus, List } from "lucide-react";
+import { Package, IndianRupee, Clock, Check, X, Truck, Plus, List } from "lucide-react";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
+import ProfileMenu from "@/components/ProfileMenu";
 
 interface VendorOrder {
   id: string;
@@ -109,9 +110,7 @@ const VendorDashboard = () => {
             <Link to="/vendor/inventory" className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-foreground/10 text-primary-foreground">
               <List className="h-4 w-4" />
             </Link>
-            <Link to="/settings" className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-foreground/10 text-primary-foreground">
-              <Settings className="h-4 w-4" />
-            </Link>
+            <ProfileMenu />
           </div>
         </div>
       </header>
