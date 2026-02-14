@@ -1,4 +1,5 @@
 import { MapPin, Search, ChevronRight, Clock } from "lucide-react";
+import WavyBackground from "@/components/WavyBackground";
 import ProfileMenu from "@/components/ProfileMenu";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -48,7 +49,8 @@ const Index = () => {
   const openVendors = vendors.filter((v) => v.is_open);
 
   return (
-    <div className="min-h-screen bg-background pb-20">
+    <div className="relative min-h-screen bg-background pb-20">
+      <WavyBackground />
       <header className="sticky top-0 z-40 border-b border-border bg-card/95 backdrop-blur-md">
         <div className="mx-auto max-w-lg px-4 py-3">
           <div className="flex items-center justify-between">
