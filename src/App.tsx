@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -7,6 +8,7 @@ import { CartProvider } from "@/contexts/CartContext";
 import { LanguageProvider, useLanguage } from "@/contexts/LanguageContext";
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import BottomNav from "@/components/BottomNav";
+import SplashScreen from "@/components/SplashScreen";
 import LanguageSelection from "./pages/LanguageSelection";
 import Auth from "./pages/Auth";
 import RoleSelection from "./pages/RoleSelection";
@@ -29,6 +31,11 @@ const queryClient = new QueryClient();
 const AppRoutes = () => {
   const { isLanguageSelected } = useLanguage();
   const { user, role, loading, hasVendorShop } = useAuth();
+  const [showSplash, setShowSplash] = useState(true);
+
+  if (showSplash) {
+    return <SplashScreen onComplete={() => setShowSplash(false)} />;
+  }
 
   if (loading) {
     return (
