@@ -6,6 +6,7 @@ import { Package, IndianRupee, Clock, Check, X, Truck, Plus, List } from "lucide
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import ProfileMenu from "@/components/ProfileMenu";
+import WavyBackground from "@/components/WavyBackground";
 
 interface VendorOrder {
   id: string;
@@ -99,7 +100,8 @@ const VendorDashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background pb-8">
+    <div className="relative min-h-screen bg-background pb-8">
+      <WavyBackground />
       <header className="sticky top-0 z-40 border-b border-border bg-primary">
         <div className="mx-auto flex max-w-lg items-center justify-between px-4 py-3">
           <div>
