@@ -19,7 +19,7 @@ const SplashScreen = ({ onComplete }: SplashScreenProps) => {
         }}
       >
         {/* Wavy background */}
-        <div className="absolute inset-0 opacity-20">
+        <div className="absolute inset-0 opacity-10">
           <svg className="absolute bottom-0 w-full" viewBox="0 0 1440 400" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
             <motion.path
               d="M0,320 C240,200 480,360 720,280 C960,200 1200,340 1440,260 L1440,400 L0,400 Z"
